@@ -47,7 +47,7 @@ jobs:
     vmImage: 'macOS-10.13'
   steps:
   - script: |
-      brew tap homebrew/homebrew-science
+      brew tap bathomas/homebrew-bat
       brew install ninja insighttoolkit
     displayName: Brew install dependencies
   - script: |
