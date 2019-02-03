@@ -78,3 +78,38 @@ jobs:
       cd build.release
       ctest
     displayName: 'Run tests, release'
+- job: Windows_VS2015_x64
+  pool:
+      vmImage: 'vs2015-win2012r2'
+  steps:
+    - script: |
+        git clone https://github.com/microsoft/vcpkg
+        .\vcpkg\bootstrap-vcpkg.bat
+      displayName: Bootstrap vcpkg
+    - script: .\vcpkg\vcpkg.exe install itk --triplet x64-windows
+      displayName: vcpkg install dependencies
+    - script: mkdir build.common
+      displayName: Make Build Directory
+    - task: CMake@1
+      inputs:
+        workingDirectory: 'build.common'
+        cmakeArgs: '-A x64 -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake '
+    - task: MSBuild@1
+      inputs:
+        solution: 'build.common/ALL_BUILD.vcxproj'
+        maximumCpuCount: true
+        platform: 'x64'
+    - script: |
+        cd build.common\Debug\
+        ctest
+      displayName: 'Run tests, debug'
+    - task: MSBuild@1
+      inputs:
+        solution: 'build.common/ALL_BUILD.vcxproj'
+        maximumCpuCount: true
+        platform: 'x64'
+        configuration: 'Release'
+    - script: |
+        cd build.common\Release\
+        ctest
+      displayName: 'Run tests, release'
