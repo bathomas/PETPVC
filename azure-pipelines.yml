@@ -93,6 +93,7 @@ jobs:
         solution: 'build.ITK/INSTALL.vcxproj'
         maximumCpuCount: true
         platform: 'x64'
+        configuration: 'Release'
       displayName: Build ITK
     - script: mkdir build.common
       displayName: Make Build Directory
