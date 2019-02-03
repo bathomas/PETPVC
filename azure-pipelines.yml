@@ -83,7 +83,7 @@ jobs:
       vmImage: 'vs2017-win2016'
   steps:
     - script: |
-        git clone https://github.com/InsightSoftwareConsortium/ITK.git
+        git clone -b v4.13.1 --single-branch https://github.com/InsightSoftwareConsortium/ITK.git
         mkdir build.ITK
         cd build.ITK
         cmake -G "Visual Studio 15 Win64" -DBUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF -DModule_ITKReview=ON ../ITK
@@ -101,17 +101,25 @@ jobs:
         solution: 'build.common/ALL_BUILD.vcxproj'
         maximumCpuCount: true
         platform: 'x64'
-    - script: |
-        cd build.common\Debug\
-        ctest
-      displayName: 'Run tests, debug'
+        configuration: 'Release'
+        displayName: 'Build PETPVC, debug'
+    - task: MSBuild@1
+      inputs:
+        solution: 'build.common/RUN_TESTS.vcxproj'
+        maximumCpuCount: true
+        platform: 'x64'
+        displayName: 'Run tests, debug'
     - task: MSBuild@1
       inputs:
         solution: 'build.common/ALL_BUILD.vcxproj'
         maximumCpuCount: true
         platform: 'x64'
         configuration: 'Release'
-    - script: |
-        cd build.common\Release\
-        ctest
-      displayName: 'Run tests, release'
+        displayName: 'Build PETPVC, debug'
+    - task: MSBuild@1
+      inputs:
+        solution: 'build.common/RUN_TESTS.vcxproj'
+        maximumCpuCount: true
+        platform: 'x64'
+        configuration: 'Release'
+        displayName: 'Run tests, release'
