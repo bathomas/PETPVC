@@ -98,32 +98,19 @@ jobs:
       displayName: Make Build Directory
     - script: |
         cd build.common
-        cmake -G "Visual Studio 15 Win64" ..
-      displayName: Configure PETPVC  
-    - task: MSBuild@1
-      inputs:
-        solution: 'build.common/ALL_BUILD.vcxproj'
-        maximumCpuCount: true
-        platform: 'x64'
-        configuration: 'Debug'
-        displayName: 'Build PETPVC, debug'
-    - task: MSBuild@1
-      inputs:
-        solution: 'build.common/RUN_TESTS.vcxproj'
-        maximumCpuCount: true
-        platform: 'x64'
-        displayName: 'Run tests, debug'
+        cmake -G "Visual Studio 15 Win64" -DCMAKE_BUILD_TYPE=Release ..
+      displayName: Configure PETPVC
     - task: MSBuild@1
       inputs:
         solution: 'build.common/ALL_BUILD.vcxproj'
         maximumCpuCount: true
         platform: 'x64'
         configuration: 'Release'
-        displayName: 'Build PETPVC, release'
+        displayName: 'Build PETPVC'
     - task: MSBuild@1
       inputs:
         solution: 'build.common/RUN_TESTS.vcxproj'
         maximumCpuCount: true
         platform: 'x64'
         configuration: 'Release'
-        displayName: 'Run tests, release'
+        displayName: 'Run tests'
