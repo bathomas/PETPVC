@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+- script: |
+    sudo apt-get install -y libinsighttoolkit4-dev
+  displayName: Apt install dependencies
+- script: |
+    mkdir build.debug
+    mkdir build.release
+  displayName: Make Build Directories
+- task: CMake@1
+  inputs:
+    workingDirectory: 'build.debug'
+    cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug ..'
+- task: CMake@1
+  inputs:
+    workingDirectory: 'build.release'
+    cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Release ..'
+- script: |
+    cd build.debug
+    ninja
+  displayName: 'Run ninja, debug'
