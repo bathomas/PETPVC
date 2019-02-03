@@ -86,7 +86,7 @@ jobs:
         git clone https://github.com/InsightSoftwareConsortium/ITK.git
         mkdir build.ITK
         cd build.ITK
-        cmake -G "Visual Studio 15 Win64" ../ITK
+        cmake -G "Visual Studio 15 Win64" -DBUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF -DModule_ITKReview=ON ../ITK
       displayName: Configure ITK
     - task: MSBuild@1
       inputs:
