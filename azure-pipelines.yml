@@ -13,7 +13,7 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 - script: |
-    sudo apt-get install -y libinsighttoolkit4-dev
+    sudo apt-get install -y ninja-build libinsighttoolkit4-dev
   displayName: Apt install dependencies
 - script: |
     mkdir build.debug
@@ -31,3 +31,15 @@ steps:
     cd build.debug
     ninja
   displayName: 'Run ninja, debug'
+- script: |
+    cd build.debug
+    ctest
+  displayName: 'Run tests, debug'
+- script: |
+    cd build.release
+    ninja
+  displayName: 'Run ninja, release'
+- script: |
+    cd build.release
+    ctest
+  displayName: 'Run tests, release'
