@@ -10,8 +10,6 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 - script: |
     sudo apt-get install -y ninja-build libinsighttoolkit4-dev
   displayName: Apt install dependencies
