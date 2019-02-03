@@ -83,18 +83,14 @@ jobs:
       vmImage: 'vs2017-win2016'
   steps:
     - script: |
-        git clone https://github.com/microsoft/vcpkg
-        .\vcpkg\bootstrap-vcpkg.bat
-        .\vcpkg\vcpkg.exe update
-      displayName: Bootstrap vcpkg
-    - script: .\vcpkg\vcpkg.exe install itk --triplet x64-windows
-      displayName: vcpkg install dependencies
+        git clone https://github.com/InsightSoftwareConsortium/ITK.git
+        mkdir build.ITK
+        cd build.ITK
+        cmake -G "Visual Studio 15 Win64" ../ITK
+        MSBuild INSTALL.vcxproj
+      displayName: Build ITK
     - script: mkdir build.common
       displayName: Make Build Directory
-    - task: CMake@1
-      inputs:
-        workingDirectory: 'build.common'
-        cmakeArgs: '-A x64 -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake '
     - task: MSBuild@1
       inputs:
         solution: 'build.common/ALL_BUILD.vcxproj'
