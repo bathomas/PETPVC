@@ -85,6 +85,7 @@ jobs:
     - script: |
         git clone https://github.com/microsoft/vcpkg
         .\vcpkg\bootstrap-vcpkg.bat
+        .\vcpkg\vcpkg.exe update
       displayName: Bootstrap vcpkg
     - script: .\vcpkg\vcpkg.exe install itk --triplet x64-windows
       displayName: vcpkg install dependencies
