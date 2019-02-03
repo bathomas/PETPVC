@@ -96,12 +96,16 @@ jobs:
       displayName: Build ITK
     - script: mkdir build.common
       displayName: Make Build Directory
+    - script: |
+        cd build.common
+        cmake -G "Visual Studio 15 Win64" ..
+      displayName: Configure PETPVC  
     - task: MSBuild@1
       inputs:
         solution: 'build.common/ALL_BUILD.vcxproj'
         maximumCpuCount: true
         platform: 'x64'
-        configuration: 'Release'
+        configuration: 'Debug'
         displayName: 'Build PETPVC, debug'
     - task: MSBuild@1
       inputs:
@@ -115,7 +119,7 @@ jobs:
         maximumCpuCount: true
         platform: 'x64'
         configuration: 'Release'
-        displayName: 'Build PETPVC, debug'
+        displayName: 'Build PETPVC, release'
     - task: MSBuild@1
       inputs:
         solution: 'build.common/RUN_TESTS.vcxproj'
