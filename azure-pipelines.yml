@@ -107,11 +107,11 @@ jobs:
         maximumCpuCount: true
         platform: 'x64'
         configuration: 'Release'
-        displayName: 'Build PETPVC'
+      displayName: 'Build PETPVC'
     - task: MSBuild@1
       inputs:
         solution: 'build.common/RUN_TESTS.vcxproj'
         maximumCpuCount: true
         platform: 'x64'
         configuration: 'Release'
-        displayName: 'Run tests'
+      displayName: 'Run tests'
