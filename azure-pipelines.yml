@@ -87,7 +87,12 @@ jobs:
         mkdir build.ITK
         cd build.ITK
         cmake -G "Visual Studio 15 Win64" ../ITK
-        MSBuild INSTALL.vcxproj
+      displayName: Configure ITK
+    - task: MSBuild@1
+      inputs:
+        solution: 'build.ITK/INSTALL.vcxproj'
+        maximumCpuCount: true
+        platform: 'x64'
       displayName: Build ITK
     - script: mkdir build.common
       displayName: Make Build Directory
