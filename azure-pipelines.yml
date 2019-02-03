@@ -87,7 +87,7 @@ jobs:
         .\vcpkg\bootstrap-vcpkg.bat
         .\vcpkg\vcpkg.exe update
       displayName: Bootstrap vcpkg
-    - script: .\vcpkg\vcpkg.exe install itk --triplet x64-windows
+    - script: .\vcpkg\vcpkg.exe install itk
       displayName: vcpkg install dependencies
     - script: mkdir build.common
       displayName: Make Build Directory
